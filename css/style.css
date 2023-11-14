@@ -1,0 +1,40 @@
+
+/* HOME PAGE */
+
+.banner {
+    height: 100vh;
+    width: 100%;
+}
+
+.banner img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.navbar-toggler{
+    box-shadow: none !important;
+}
+
+
+/* UTILITIES */
+
+.earth_text {
+    color: #a2953d;
+}
+.sea_text {
+    color: #518fab;
+}
+.sea_border {
+    border: 1px solid #518fab;
+}
+
+
+
+/* POST PAGE  */
+
+.create_container{
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
