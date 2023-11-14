@@ -39,8 +39,8 @@ function show(req, res) {
     if (singlePost.length == 0) {
         res.type("json").send("Il post cercato non esiste")
     }
-    singlePost[0].image_url = "/imgs/posts/" + singlePost[0].image
-    singlePost[0].image_download_url = `/posts/${singlePost[0].slug}/download` 
+    singlePost[0].image_url = req.protocol + ":" + req.get('host') + "/imgs/posts/" + singlePost[0].image
+    singlePost[0].image_download_url = req.protocol + ":" + req.get('host') + `/posts/${singlePost[0].slug}/download` 
 
     res.type("json").send(singlePost[0])
 }
