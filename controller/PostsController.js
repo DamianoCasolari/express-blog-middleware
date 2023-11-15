@@ -53,7 +53,8 @@ function store(req, res) {
     const newPost = {
         ...req.body,
         id: maxId,
-        slug: newSlug
+        slug: newSlug,
+        image: req.file
 
     }
     // Add new Post to db
@@ -75,34 +76,57 @@ function store(req, res) {
     })
 }
 
-function destroy(req,res){
-const slug = req.params.slug
-let checkSlug = posts.filter((post)=> post.slug == slug )
-if(checkSlug.length > 0){
-    checkSlug = posts.filter((post)=> post.slug != slug )
-    fs.writeFileSync(pathDb,JSON.stringify(checkSlug, null, 2), "utf-8" )
-    res.type("html").send("<h1>File eliminato correttamente</h1>")
-} else {
-    res.type("html").send("<h1>Non risulta registrato alcun file con il nome indicato</h1>")
-}
+function destroy(req, res) {
+    const slug = req.params.slug
+    let singlePost = posts.find((post) => post.slug == slug)
+
+    //CHECK IF THAT SPECIFIC POST EXIST AND AFTER I REMOVE FROM DB
+    if (singlePost) {
+
+        const postsWithoutSinglePost = posts.filter((post) => post.slug != slug)
+        fs.writeFileSync(pathDb, JSON.stringify(postsWithoutSinglePost, null, 2), "utf-8")
+
+        //SPLIT OLD AND NEW POST BECAUSE HAVE DIFFENT TYPEOF AND DIFFERNET FOLDER AND DELETE ITS IMG FROM SERVER
+        if (singlePost.image) {
+            if (typeof singlePost.image == "string") {
+                const imgPath = path.resolve("public", "imgs", "posts", singlePost.image)
+                fs.unlinkSync(imgPath)
+            } else {
+                const imgPath = path.resolve("public", "imgs", "newPosts", singlePost.image.filename)
+                fs.unlinkSync(imgPath)
+            }
+        }
+        res.type("html").send("<h1>File eliminato correttamente</h1>")
+    } 
+    else {
+
+        res.type("html").send("<h1>Non risulta registrato alcun file con il nome indicato</h1>")
+    }
 
 }
 
 
 function show(req, res) {
     const slug = req.params.slug
-    const singlePost = posts.filter((post) => {
+    const singlePost = posts.find((post) => {
         return post.slug == slug
     })
-    if (singlePost.length == 0) {
+    console.log(singlePost);
+    if (!singlePost) {
         res.type("json").send("Il post cercato non esiste")
     }
-    singlePost[0].image_url = process.env.APP_URL + "/imgs/posts/" + singlePost[0].image
-    //oppure => singlePost[0].image_url = req.protocol + ":" + req.get('host') + "/imgs/posts/" + singlePost[0].image
-    singlePost[0].image_download_url = process.env.APP_URL + `/posts/${singlePost[0].slug}/download`
-    // oppure => singlePost[0].image_download_url = req.protocol + ":" + req.get('host') + `/posts/${singlePost[0].slug}/download` 
+    if (singlePost.image) {
+        if (typeof singlePost.image == "string") {
+            singlePost.image_url = process.env.APP_URL + "/imgs/posts/" + singlePost.image
+            singlePost.image_download_url = process.env.APP_URL + `/posts/${singlePost.slug}/download`
 
-    res.type("json").send(singlePost[0])
+        } else {
+            singlePost.image_url = process.env.APP_URL + "/imgs/newPosts/" + singlePost.image.filename
+            singlePost.image_download_url = process.env.APP_URL + `/newPosts/${singlePost.slug}/download`
+        }
+    }
+
+    res.type("json").send(singlePost)
 }
 
 function create(req, res) {
