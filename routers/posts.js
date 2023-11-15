@@ -16,5 +16,9 @@ router.get("/:slug/download", PostController.download)
 // Define routes POST
 router.post("/",PostController.store)
 
+//Define routes Delete
+router.delete("/:slug",PostController.destroy)
+
+
 // Export module
 module.exports = router

@@ -29,8 +29,5 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", HomeController)
 app.use("/posts", PostController)
 
-// Create routes POST
-app.post("/", PostController)
-
 // Bind server with a PORT
 app.listen(3000, console.log("Create server correctly = http://localhost:3000"))

@@ -1,8 +1,10 @@
 const posts = require("../db/postsDb")
 const path = require("path")
 const fs = require("fs")
-const { kebabCase } = require('lodash');
+const { kebabCase, indexOf } = require('lodash');
 
+// General variable 
+const pathDb = path.resolve("db/postsDb.json")
 
 
 function index(req, res) {
@@ -58,7 +60,6 @@ function store(req, res) {
     posts.push(newPost)
 
     //overwrite the db
-    const pathDb = path.resolve("db/postsDb.json")
     fs.writeFileSync(pathDb, JSON.stringify(posts, null, 2), "utf-8")
 
     //split type of response based on accept request
@@ -75,7 +76,16 @@ function store(req, res) {
 }
 
 function destroy(req,res){
-console.log("ciao");
+const slug = req.params.slug
+let checkSlug = posts.filter((post)=> post.slug == slug )
+if(checkSlug.length > 0){
+    checkSlug = posts.filter((post)=> post.slug != slug )
+    fs.writeFileSync(pathDb,JSON.stringify(checkSlug, null, 2), "utf-8" )
+    res.type("html").send("<h1>File eliminato correttamente</h1>")
+} else {
+    res.type("html").send("<h1>Non risulta registrato alcun file con il nome indicato</h1>")
+}
+
 }
 
 
