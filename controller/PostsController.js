@@ -26,7 +26,7 @@ function index(req, res) {
                         htmlContent.push(`<img src="/imgs/posts/${post.image}" alt="Immagine del post:${post.title}">`)
 
                     } else {
-                        htmlContent.push(` <img src="/imgs/newPosts/${post.image.filename + "." + post.image.originalname.split(".")[1] }" alt="Immagine del post:${post.title}">`)
+                        htmlContent.push(` <img src="/imgs/newPosts/${post.image.filename}" alt="Immagine del post:${post.title}">`)
                     }
                 }
                 htmlContent.push(`
@@ -58,6 +58,12 @@ function store(req, res) {
     if (checkSlug.length > 0) {
         newSlug = newSlug + "-" + maxId
     }
+
+    //add extension of new imported image
+    const newImgPath = path.resolve("public", "imgs", "newPosts", req.file.filename)
+    fs.renameSync(newImgPath, path.join(path.dirname(newImgPath), req.file.filename + "." + req.file.originalname.split(".")[1]))
+    req.file.filename = req.file.filename + "." + req.file.originalname.split(".")[1]
+
 
     // create a new Post
     const newPost = {
@@ -132,7 +138,7 @@ function show(req, res) {
 
         } else {
             singlePost.image_url = process.env.APP_URL + "/imgs/newPosts/" + singlePost.image.filename
-            singlePost.image_download_url = process.env.APP_URL + `/newPosts/${singlePost.slug}/download`
+            singlePost.image_download_url = process.env.APP_URL + `/posts/${singlePost.slug}/download`
         }
     }
 
@@ -152,18 +158,22 @@ function create(req, res) {
 
 function download(req, res) {
     const slug = req.params.slug
-    const singlePost = posts.filter((post) => {
+    const singlePost = posts.find((post) => {
         return post.slug == slug
     })
-    if (singlePost.length == 0) {
+    if (!singlePost) {
         res.send("ERRORE 404 - File non registrato nei nostri database")
     }
-    const postSlugNoSlash = encodeURIComponent(singlePost[0].image)
-    const imgPath = path.resolve(__dirname, "..", "public", "imgs", "posts", postSlugNoSlash)
 
-    console.log(imgPath);
-    res.download(imgPath)
-
+    if(typeof singlePost.image == "string"){
+        const postSlugNoSlash = encodeURIComponent(singlePost.image)
+        const imgPath = path.resolve(__dirname, "..", "public", "imgs", "posts", postSlugNoSlash)
+        res.download(imgPath)
+    } else {
+        const postSlugNoSlash = encodeURIComponent(singlePost.image.filename)
+        const imgPath = path.resolve(__dirname, "..", "public", "imgs", "newPosts", postSlugNoSlash)
+        res.download(imgPath)
+    }
 }
 
 module.exports = {

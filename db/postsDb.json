@@ -63,26 +63,13 @@
     ]
   },
   {
-    "content": "Aia aia ai questo posto non esiste",
-    "title": "lucciola e cicciola poer",
-    "image": "lucciola.jpeg",
-    "tag": [
-      "tag1",
-      "tag2"
-    ],
-    "id": 6,
-    "slug": "lucciola-e-cicciola-poer",
-    "image_url": "http://localhost:3000/imgs/posts/lucciola.jpeg",
-    "image_download_url": "http://localhost:3000/posts/lucciola-e-cicciola-poer/download"
-  },
-  {
     "title": "Ciccino",
     "content": "ciccino va in campeggio ma è infelice.. ciccino odia il campeggio perchè lo stuprano",
     "tag": [
       "bella",
       "merda"
     ],
-    "id": 7,
+    "id": 6,
     "slug": "ciccino",
     "image": {
       "fieldname": "image",
@@ -90,8 +77,8 @@
       "encoding": "7bit",
       "mimetype": "image/jpeg",
       "destination": "public/imgs/newPosts",
-      "filename": "b89b07af31329a6a1c725dfdf42ec4b9",
-      "path": "public\\imgs\\newPosts\\b89b07af31329a6a1c725dfdf42ec4b9",
+      "filename": "6a62501e1eed55e28da070a5da0530a3.jpeg",
+      "path": "public\\imgs\\newPosts\\6a62501e1eed55e28da070a5da0530a3",
       "size": 34359
     }
   }
