@@ -18,11 +18,21 @@ function index(req, res) {
                 htmlContent.push(`
                     <li>
                     <h3>${post.title}</h3>
-                    <p>${post.content}</p>
-                    <img src="/imgs/posts/${post.image}" alt="Immagine del post : ${post.title}">
-                    <br>
+                    <p>${post.content}</p>`)
+
+                if (post.image) {
+                    if (typeof post.image == "string") {
+
+                        htmlContent.push(`<img src="/imgs/posts/${post.image}" alt="Immagine del post:${post.title}">`)
+
+                    } else {
+                        htmlContent.push(` <img src="/imgs/newPosts/${post.image.filename + "." + post.image.originalname.split(".")[1] }" alt="Immagine del post:${post.title}">`)
+                    }
+                }
+                htmlContent.push(`
+                <br>
                     <a href="/posts/${slug}">Informazioni più dettagliate</a>
-                    </li>`)
+                </li>`)
 
             }
             htmlContent.push("</ul>")
@@ -97,7 +107,7 @@ function destroy(req, res) {
             }
         }
         res.type("html").send("<h1>File eliminato correttamente</h1>")
-    } 
+    }
     else {
 
         res.type("html").send("<h1>Non risulta registrato alcun file con il nome indicato</h1>")
