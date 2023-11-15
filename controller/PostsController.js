@@ -1,6 +1,8 @@
-// const { text } = require("body-parser")
 const posts = require("../db/postsDb")
 const path = require("path")
+const fs = require("fs")
+const { kebabCase } = require('lodash');
+
 
 
 function index(req, res) {
@@ -31,6 +33,52 @@ function index(req, res) {
     })
 }
 
+function store(req, res) {
+
+    // create dinamic ID
+    const idArray = posts.map((post) => post.id)
+    let maxId = Math.max(...idArray)
+    maxId++
+
+    // create dinamic slug
+    let newSlug = kebabCase(req.body.title)
+    const checkSlug = posts.filter((post) => post.slug == newSlug)
+    if (checkSlug.length > 0) {
+        newSlug = newSlug + "-" + maxId
+    }
+
+    // create a new Post
+    const newPost = {
+        ...req.body,
+        id: maxId,
+        slug: newSlug
+
+    }
+    // Add new Post to db
+    posts.push(newPost)
+
+    //overwrite the db
+    const pathDb = path.resolve("db/postsDb.json")
+    fs.writeFileSync(pathDb, JSON.stringify(posts, null, 2), "utf-8")
+
+    //split type of response based on accept request
+    res.format({
+        json: () => {
+            const reqBody = req.body
+            res.type("json").send(newPost)
+        },
+        html: () => {
+            const homePath = process.env.APP_URL
+            res.redirect(homePath)
+        }
+    })
+}
+
+function destroy(req,res){
+console.log("ciao");
+}
+
+
 function show(req, res) {
     const slug = req.params.slug
     const singlePost = posts.filter((post) => {
@@ -39,8 +87,10 @@ function show(req, res) {
     if (singlePost.length == 0) {
         res.type("json").send("Il post cercato non esiste")
     }
-    singlePost[0].image_url = req.protocol + ":" + req.get('host') + "/imgs/posts/" + singlePost[0].image
-    singlePost[0].image_download_url = req.protocol + ":" + req.get('host') + `/posts/${singlePost[0].slug}/download` 
+    singlePost[0].image_url = process.env.APP_URL + "/imgs/posts/" + singlePost[0].image
+    //oppure => singlePost[0].image_url = req.protocol + ":" + req.get('host') + "/imgs/posts/" + singlePost[0].image
+    singlePost[0].image_download_url = process.env.APP_URL + `/posts/${singlePost[0].slug}/download`
+    // oppure => singlePost[0].image_download_url = req.protocol + ":" + req.get('host') + `/posts/${singlePost[0].slug}/download` 
 
     res.type("json").send(singlePost[0])
 }
@@ -65,7 +115,7 @@ function download(req, res) {
         res.send("ERRORE 404 - File non registrato nei nostri database")
     }
     const postSlugNoSlash = encodeURIComponent(singlePost[0].image)
-    const imgPath = path.resolve(__dirname , ".." ,"public" , "imgs" , "posts" , postSlugNoSlash) 
+    const imgPath = path.resolve(__dirname, "..", "public", "imgs", "posts", postSlugNoSlash)
 
     console.log(imgPath);
     res.download(imgPath)
@@ -76,5 +126,7 @@ module.exports = {
     index,
     show,
     create,
-    download
+    download,
+    store,
+    destroy
 }
