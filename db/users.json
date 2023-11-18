@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "usersname": "mario rossi",
+        "pasword": "root12"
+    },
+    {
+        "id": 2,
+        "usersname": "giuseppe verdi",
+        "pasword": "root12" 
+    },
+    {
+        "id": 3,
+        "usersname": "marco pavia",
+        "pasword": "root12" 
+    },
+    {
+        "id": 4,
+        "usersname": "melania melinda",
+        "pasword": "root12" 
+    }
+]

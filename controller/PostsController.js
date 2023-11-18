@@ -61,7 +61,7 @@ function store(req, res) {
 
     //add extension of new imported image
     const newImgPath = path.resolve("public", "imgs", "newPosts", req.file.filename)
-    fs.renameSync(newImgPath, path.join(path.dirname(newImgPath), req.file.filename + "." + req.file.originalname.split(".")[1]))
+    fs.renameSync(newImgPath, path.join(path.dirname(newImgPath), req.file.filename + "." + path.extname(req.file.originalname)))
     req.file.filename = req.file.filename + "." + req.file.originalname.split(".")[1]
 
 
@@ -165,7 +165,7 @@ function download(req, res) {
         res.send("ERRORE 404 - File non registrato nei nostri database")
     }
 
-    if(typeof singlePost.image == "string"){
+    if (typeof singlePost.image == "string") {
         const postSlugNoSlash = encodeURIComponent(singlePost.image)
         const imgPath = path.resolve(__dirname, "..", "public", "imgs", "posts", postSlugNoSlash)
         res.download(imgPath)

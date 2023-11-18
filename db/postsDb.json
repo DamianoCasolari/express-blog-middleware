@@ -22,7 +22,9 @@
       "Antipasti",
       "Ricette vegetariane",
       "Ricette al forno"
-    ]
+    ],
+    "image_url": "http://localhost:3000/imgs/posts/cracker_barbabietola.jpeg",
+    "image_download_url": "http://localhost:3000/posts/cracker-alla-barbabeitola/download"
   },
   {
     "id": 3,
@@ -60,7 +62,9 @@
       "Torte",
       "Ricette vegetariane",
       "Ricette al forno"
-    ]
+    ],
+    "image_url": "http://localhost:3000/imgs/posts/torta_paesana.jpeg",
+    "image_download_url": "http://localhost:3000/posts/torta-paesana/download"
   },
   {
     "title": "Ciccino",
@@ -77,8 +81,48 @@
       "encoding": "7bit",
       "mimetype": "image/jpeg",
       "destination": "public/imgs/newPosts",
-      "filename": "6a62501e1eed55e28da070a5da0530a3.jpeg",
-      "path": "public\\imgs\\newPosts\\6a62501e1eed55e28da070a5da0530a3",
+      "filename": "e97e2556ad3542c851ada0f165418f06.jpeg",
+      "path": "public\\imgs\\newPosts\\e97e2556ad3542c851ada0f165418f06",
+      "size": 34359
+    }
+  },
+  {
+    "title": "Ciccino",
+    "content": "ciccino va in campeggio ma è infelice.. ciccino odia il campeggio perchè lo stuprano",
+    "tag": [
+      "bella",
+      "merda"
+    ],
+    "id": 7,
+    "slug": "ciccino-7",
+    "image": {
+      "fieldname": "image",
+      "originalname": "ciambellone.jpeg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "public/imgs/newPosts",
+      "filename": "35720e63106b749900e9dce2baeb5a6e.jpeg",
+      "path": "public\\imgs\\newPosts\\35720e63106b749900e9dce2baeb5a6e",
+      "size": 34359
+    }
+  },
+  {
+    "title": "Ciccino",
+    "content": "ciccino va in campeggio ma è infelice.. ciccino odia il campeggio perchè lo stuprano",
+    "tag": [
+      "bella",
+      "merda"
+    ],
+    "id": 8,
+    "slug": "ciccino-8",
+    "image": {
+      "fieldname": "image",
+      "originalname": "ciambellone.jpeg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "public/imgs/newPosts",
+      "filename": "4ebfd84832a508b35c2393102a37a6bc.jpeg",
+      "path": "public\\imgs\\newPosts\\4ebfd84832a508b35c2393102a37a6bc",
       "size": 34359
     }
   }
