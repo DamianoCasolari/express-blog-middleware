@@ -10,7 +10,7 @@ module.exports = function(err,req,res,next){
         fs.unlinkSync(pathNewImage)
     }
 
-    res.format({
+    res.format({ 
         json : () => {
             res.status(500).json({message:"Errore - Qualcosa è andato stroto ", error: err.message})
 

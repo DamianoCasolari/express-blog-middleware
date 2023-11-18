@@ -8,6 +8,6 @@ const payload = {
     email: user.email
 }
 
-return jwt.sign(payload,process.env.JWT_secret, {expireIn : '1h'})
+return jwt.sign(payload,process.env.JWT_secret, {expiresIn : '1h'})
 
 }

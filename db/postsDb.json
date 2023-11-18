@@ -125,5 +125,25 @@
       "path": "public\\imgs\\newPosts\\4ebfd84832a508b35c2393102a37a6bc",
       "size": 34359
     }
+  },
+  {
+    "title": "Ciccino",
+    "content": "ciccino va in campeggio ma è infelice.. ciccino odia il campeggio perchè lo stuprano",
+    "tag": [
+      "bella",
+      "merda"
+    ],
+    "id": 9,
+    "slug": "ciccino-9",
+    "image": {
+      "fieldname": "image",
+      "originalname": "ciambellone.jpeg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "public/imgs/newPosts",
+      "filename": "15719a37585f01fe17d3250343670d73.jpeg",
+      "path": "public\\imgs\\newPosts\\15719a37585f01fe17d3250343670d73",
+      "size": 34359
+    }
   }
 ]
