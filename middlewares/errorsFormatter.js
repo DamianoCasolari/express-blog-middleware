@@ -12,11 +12,11 @@ module.exports = function(err,req,res,next){
 
     res.format({ 
         json : () => {
-            res.status(500).json({message:"Errore - Qualcosa è andato stroto ", error: err.message})
+            res.status(500).json({message:"Errore - Qualcosa è andato stroto ", error: err.message, status:err.status})
 
         },
         html : ()=> {
-            res.status(500).send("<h1>Errore - Qualcosa è andato storto </h1>")
+            res.status(500).send(`<h1>Errore - Qualcosa è andato storto - Errore ${err.status}</h1>`)
         }
     })
 }

@@ -2,6 +2,7 @@ const posts = require("../db/postsDb")
 const path = require("path")
 const fs = require("fs")
 const { kebabCase, indexOf } = require('lodash');
+const exceptionError = require("../utilities/exceptionError");
 
 // General variable 
 const pathDb = path.resolve("db/postsDb.json")
@@ -162,7 +163,9 @@ function download(req, res) {
         return post.slug == slug
     })
     if (!singlePost) {
-        res.send("ERRORE 404 - File non registrato nei nostri database")
+        // res.send("ERRORE 400 - File non registrato nei nostri database")
+        throw new exceptionError("File is not in our database","400")
+
     }
 
     if (typeof singlePost.image == "string") {
